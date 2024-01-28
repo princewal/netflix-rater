@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "Netflix Rater",
+    "version": "1.0",
+    "description": "Detects when the user is on Netflix and requests permission to access active tabs.",
+    "author": "butt.waleed@gmail.com",
+    "permissions": ["activeTab"],
+    "icons" : {
+      "16": "images/icon.png",
+      "48": "images/icon.png",
+      "128": "images/icon.png"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_title": "Netflix movies raters"
+    },
+    "background": {
+      "service_worker": "./scripts/background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://www.netflix.com/*"],
+        "js": ["./scripts/netflix.js"]
+      }
+    ]
+  }
