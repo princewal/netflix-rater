@@ -22,5 +22,6 @@
         "matches": ["https://www.netflix.com/*"],
         "js": ["./scripts/netflix.js"]
       }
-    ]
+    ],
+    "options_page": "options.html"
   }

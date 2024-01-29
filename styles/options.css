@@ -1,0 +1,15 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: beige;
+}
+
+section {
+    padding: 10% 15%;
+    background-color: darkgreen;
+    color: white;
+}
