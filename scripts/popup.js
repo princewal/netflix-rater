@@ -1,1 +1,1 @@
-console.log('popup js', this)
+console.log('popup js', this.File.name)
