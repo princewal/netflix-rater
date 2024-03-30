@@ -4,7 +4,11 @@
     "version": "1.0",
     "description": "Detects when the user is on Netflix and requests permission to access active tabs.",
     "author": "butt.waleed@gmail.com",
-    "permissions": ["activeTab"],
+    "permissions": ["activeTab", "tabs", "storage"],
+    "host_permissions": [
+      "http://*/*",
+      "https://*/*"
+    ],
     "icons" : {
       "16": "images/icon.png",
       "48": "images/icon.png",
@@ -20,7 +24,14 @@
     "content_scripts": [
       {
         "matches": ["https://www.netflix.com/*"],
-        "js": ["./scripts/netflix.js"]
+        "js": ["./scripts/netflix.js"],
+        "css": ["./styles/netflix.css"]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [ "images/thumbs-up.png", "images/question-mark.svg" ],
+        "matches": ["https://www.netflix.com/*"]
       }
     ],
     "options_page": "options.html"

@@ -1,0 +1,34 @@
+:root {
+    --primary-color: #f40612
+}
+
+.nm-content-horizontal-row-item {
+    position: relative;
+}
+
+.nm-content-horizontal-row-item .rater-container {
+    position: absolute;
+    top: 2%;
+    left: auto;
+    right: 12px;
+    min-height: 20px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 100;
+}
+
+.nm-content-horizontal-row-item .rater-container .thumbs-container {
+    flex: 0 1 auto;
+    max-width: 30px;
+    cursor: pointer;
+    filter: drop-shadow(0 0 0.75rem crimson);
+}
+
+.nm-content-horizontal-row-item .rater-container img {
+    display: block;
+    max-width: 100%;    
+    filter: drop-shadow(0 0 0.75rem rgb(255, 217, 0));
+}
