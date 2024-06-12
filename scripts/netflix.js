@@ -64,6 +64,14 @@ function getMovieStat(event) {
   const movieName = infoSibling.querySelector('.nm-collections-title-name').innerText
   console.log('get movie stat', infoSibling)
   console.log(movieName)
+
+  chrome.runtime.sendMessage({action: 'getMovieInfo', payload: {movieName}},    function(response) {
+    if (response && response.success) {
+      console.log('Received movie data:', response.data);
+    } else {
+      console.error('Error fetching movie data:', response ? response.error : 'No response from background script');
+    }
+  })
 }
 
 //API Call
