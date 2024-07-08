@@ -50,6 +50,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
+/**
+ * Take the title of the movie and make an api call and 
+ * return an object containing movie info
+ * @param {string} title 
+ * @returns {object} data
+ */
 async function getMovieInfo(title) {
   let response = await fetch(
     `https://www.omdbapi.com/?t=${title}&apikey=2d8640`
@@ -58,25 +64,3 @@ async function getMovieInfo(title) {
   console.log("bck js => getmovieinfo => data", data);
   return data;
 }
-///API Call
-
-/* chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.action === 'performAPIRequest') {
-        // Perform your API request here
-        // For example, make a fetch request to an API
-        fetch('https://example.com/api/endpoint')
-            .then(response => response.json())
-            .then(data => {
-                // Send the API response back to the content script
-                sendResponse({ success: true, data });
-            })
-            .catch(error => {
-                console.error('API request failed:', error);
-                sendResponse({ success: false, error: error.message });
-            });
-
-        // Return true to indicate that you want to use sendResponse asynchronously
-        return true;
-    }
-});
- */

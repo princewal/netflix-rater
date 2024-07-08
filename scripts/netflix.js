@@ -20,7 +20,7 @@ chrome.runtime.sendMessage({ action: 'getTabInfo' }, (response) => {
 
 function start () {
   const listOfMovies = document.querySelectorAll('main.nm-collections-container .nm-collections-row .nm-content-horizontal-row .nm-content-horizontal-row-item')
-  console.log('all moves ', listOfMovies)
+  // console.log('all moves ', listOfMovies)
 
   injectCustomElement(listOfMovies)
   
@@ -49,42 +49,56 @@ function injectCustomElement(toList) {
 
   for(let i = 0; i < selectedElements.length; i++) {
     const clonedElement = elem.cloneNode(true)
-    clonedElement.addEventListener('click', getMovieStat)
+    clonedElement.addEventListener('click', e => getMovieStat(e, clonedElement))
     
     selectedElements[i].appendChild(clonedElement)
    
   }
 }
 
-function getMovieStat(event) {
+/**
+ * THis function recieves event and elem from which we retrieve
+ * the movie. That is passed to background js and in response 
+ * we get the movie name which we forward it to add the ratings
+ * @param {object} event 
+ * @param {HTMLElement} elem 
+ */
+function getMovieStat(event, elem) {
   event.preventDefault()
   event.stopPropagation()
 
-  const infoSibling = this.previousElementSibling
+  
+
+  const infoSibling = elem.previousElementSibling
   const movieName = infoSibling.querySelector('.nm-collections-title-name').innerText
-  console.log('get movie stat', infoSibling)
+  
   console.log(movieName)
 
   chrome.runtime.sendMessage({action: 'getMovieInfo', payload: {movieName}},    function(response) {
+    
     if (response && response.success) {
-      console.log('Received movie data:', response.data);
+      elem.classList.add('rated')
+      putRatings(response.data, elem.querySelector('.rating-container'))
     } else {
       console.error('Error fetching movie data:', response ? response.error : 'No response from background script');
     }
   })
 }
 
-//API Call
-
-/* document.addEventListener('DOMContentLoaded', function () {
-    const injectedElement = document.getElementById('myInjectedElement');
-
-    injectedElement.addEventListener('click', function () {
-        // Send a message to the background service worker
-        chrome.runtime.sendMessage({ action: 'performAPIRequest' }, function (response) {
-            // Handle the response from the background service worker
-            console.log('Received response:', response);
-        });
-    });
-});
- */
+function putRatings(data, elem) {
+  console.log('Received movie data:', data);
+  let ratings = data["Ratings"]
+  let htmlContext = `<div class="source">
+    <span title="Internet Movie Database">IMD:</span>
+    <span>${ratings[0].Value}</span>      
+  </div>
+  <div class="source">
+    <span title="Rotten Tomato">RT:</span>
+    <span>${ratings[1].Value}</span>      
+  </div>
+  <div class="source">
+    <span title="Metacritic">MC:</span>
+    <span>${ratings[2].Value}</span>      
+  </div>`
+  elem.innerHTML = htmlContext
+}
